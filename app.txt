@@ -1,0 +1,11 @@
+- App destinada a un consecionario de autos y motos
+
+
+-To do:
+    -Crear una clase llamada Auto
+    -Crear una clase llamada Moto
+    -Crear una clase llamada Concesionario
+    -Crear una clase llamada Venta
+    -Crear una clase llamada Cliente
+    -Crear una clase llamada Empleado
+    -Crear una clase llamada Caja
