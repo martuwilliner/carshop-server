@@ -4,6 +4,8 @@ const router = Router();
 const multer = require("multer")
 const path = require("path")
 const {index,show,create,update,destroy} = require("../controllers/products");
+const auth = require("../middleware/auth");
+
 
 // Multer
 const storage = multer.diskStorage({
@@ -19,10 +21,10 @@ const upload = multer({storage: storage});
 
 // routes
 
-router.get("/",index);
-router.get("/:id",show);
-router.post("/", upload.single("image"), create); // upload.single("image") --> multer implementation
-router.put("/:id",update);
-router.delete("/:id",destroy);
+router.get("/",index); // listado de productos
+router.get("/:id",show); // mostrar un producto
+router.post("/", [auth ,upload.single("image")], create); // crear un producto
+router.put("/:id",[auth], update); // actualizar un producto
+router.delete("/:id",[auth],destroy); // eliminar un producto
 
 module.exports = router;
