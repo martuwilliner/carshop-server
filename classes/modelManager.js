@@ -48,6 +48,10 @@ class modelManager {
         fs.writeFileSync(this.file, JSON.stringify(list, null, 2))
         return list
     }
+    writeData(data) {
+        fs.writeFileSync(this.file, JSON.stringify(data, null, 2))
+    }
+    
 }
 
 module.exports = modelManager;
