@@ -18,6 +18,9 @@ app.set('view engine', 'pug'); // para que se pueda usar pug
 
 //-----------------------------------
 //Routes
+
+app.use(require('../routes/main'))
+
 app.use('/api/productos', require('../routes/productos'));
 app.use('/api/carrito', require('../routes/carrito'));
 

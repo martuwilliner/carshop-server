@@ -16,7 +16,7 @@ module.exports = {
         let newProduct = Object({
             title: req.body.title,
             price: req.body.price,
-            image: req.file ? req.file.filename : null,
+            image: req.file ? req.file.filename : req.body.image,
             description: req.body.description,
             timestamp: new Date().getTime(),
             code: req.body.code,

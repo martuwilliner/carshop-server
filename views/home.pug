@@ -1,0 +1,39 @@
+extends layouts/index.pug
+
+block styles
+    each style in styles
+        link(rel="stylesheet", href=`/css/${style}.css`)
+
+block scripts
+    each script in scripts
+        script(src=`/js/${script}.js`)
+
+block content
+    -var isAdmin = false
+    .p-5.mb-4.bg-light.rounded-3
+        .container-fluid.py-5
+            h1.display-5.fw-bold Últimos agregados
+            p.col-md-8.fs-4.mb-4 Hace realidad el auto de tus sueños
+            .d-flex.flex-wrap.justify-content-around.mb-4.gap-2
+                each car in productos
+                    .card.cardProduct.col.p-2.position-relative
+                        img(src=car.image).card-img-top
+                        .card-body
+                            h5.card-title=car.title
+                            p.card-text=car.description
+                            p.card-text
+                                span.badge.rounded-pill.bg-success='U$D '+car.price
+                            a.btn.btn-primary.btn-lg(href='/producto/'+car.id)
+                                i.fa-solid.fa-eye
+                        a.btn.btn-success.btn-lg.position-absolute.btn-buy(href='/producto/'+car.id)
+                            i.fa-solid.fa-shopping-cart
+                        if isAdmin
+                            .card-footer
+                                a.btn.btn-warning.btn-lg(href='/producto/editar/'+car.id)
+                                    i.fa-solid.fa-pen
+                                a.btn.btn-danger.btn-lg(href='/producto/eliminar/'+car.id)
+                                    i.fa-solid.fa-trash
+
+
+
+                        
