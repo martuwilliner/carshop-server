@@ -43,15 +43,16 @@ module.exports = {
             stock: product.stock,
             cantidad: req.body.cantidad
         })
-        let updateCart = carrito.getAll().map(cart => { // recorremos todos los carritos
+        let updateCart = carrito.index().map(cart => { // recorremos todos los carritos
             if (cart.id == req.params.id) { // si el carrito que nos indiquen es el que estamos buscando
-                let exist = cart.products.find(product => product.id == newProduct.id); // buscamos si el producto que queremos agregar ya existe en el carrito
+                let exist = cart.productos?.find(product => product.id == newProduct.id); // buscamos si el producto que queremos agregar ya existe en el carrito
                 if (exist) { // si existe
                     exist.cantidad += newProduct.cantidad;  // sumamos la cantidad que nos indiquen
                     if (exist.cantidad > product.stock) return res.status(404).send('No hay stock suficiente'); // si la cantidad que nos indiquen es mayor a la cantidad del producto
                 } else {        
                 cart.products.push(newProduct); // si no existe lo agregamos al carrito
                 }
+                return cart;
             }
         })
         carrito.writeData(updateCart); // escribimos los datos en el archivo
@@ -62,10 +63,17 @@ module.exports = {
         if (!cart) return res.status(404).send('carrito no encontrado'); // si no existe el carrito
         const product = producto.show(parseInt(req.params.id_prod)); // buscamos el producto que nos indiquen
         if (!product) return res.status(404).send('producto no encontrado'); // si no existe el producto
-        const newCart = cart.products.filter(prod => prod.id != req.params.id_prod); // eliminamos el producto del carrito
-        carrito.writeData(newCart); // escribimos los datos en el archivo
-        return res.send(newCart); // enviamos el carrito actualizado
+        let updateCart = carrito.index().map(cart => { // recorremos todos los carritos
+            if (cart.id == req.params.id) { // si el carrito que nos indiquen es el que estamos buscando
+                let exist = cart.productos?.find(product => product.id == req.params.id_prod); // buscamos si el producto que queremos eliminar ya existe en el carrito
+                if (exist) { // si existe
+                    cart.productos = cart.productos.filter(product => product.id != req.params.id_prod); // eliminamos el producto
+                }
+                return cart;
+            }
+        })
+        carrito.writeData(updateCart); // escribimos los datos en el archivo
+        return res.send(updateCart); // enviamos el carrito actualizado 
     }
     
-
 }
