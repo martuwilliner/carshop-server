@@ -1,3 +1,4 @@
+const { application } = require('express');
 const express = require('express');
 const app = express();
 const http = require('http');
@@ -24,7 +25,8 @@ app.use(require('../routes/main'))
 app.use('/api/productos', require('../routes/productos'));
 app.use('/api/carrito', require('../routes/carrito'));
 
-
+app.use('/api/firebase/productos', require('../routes/products.firebase'))
+app.use('/api/firebase/productos', require('../routes/carrito.firebase'))
 //-----------------------------------
 
 
